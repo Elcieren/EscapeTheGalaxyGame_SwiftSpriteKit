@@ -1,5 +1,5 @@
 ## SwiftMapKit Uygulama Kullanımı
-| MapKit 1 | MapKit 2 |
+| Oyun Başlıyor | Oyun Bitti && Tekrardan Baslamak |
 |---------|---------|
 | ![Video 1](https://github.com/user-attachments/assets/f911d816-a7bd-4ef2-9d07-ad4f3ae53332) | ![Video 2](https://github.com/user-attachments/assets/ff77a6cc-e31f-4b5f-b4cd-67d56485e4f3) |
 
