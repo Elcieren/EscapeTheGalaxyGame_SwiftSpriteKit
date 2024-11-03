@@ -16,6 +16,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var possinleEnemies = ["ball","hammer","tv","konsol"]
     var gameTimer : Timer?
     var isGamerOver = false
+    var enemyCount = 0
+    var timerInterval = 1.0
     
     
     var score = 0 {
@@ -27,6 +29,14 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         SetUpScene()
         
+    }
+    
+    func stopGameTimer( ){
+        gameTimer?.invalidate()
+    }
+    func startGameTimer() {
+        gameTimer?.invalidate()  // Eski zamanlayıcıyı durdur
+        gameTimer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(creatEnemy), userInfo: nil, repeats: true)
     }
     
     func SetUpScene() {
@@ -82,6 +92,14 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         sprite.physicsBody?.angularVelocity = 5
         sprite.physicsBody?.linearDamping = 0
         sprite.physicsBody?.angularDamping = 0
+        
+        enemyCount += 1
+
+           // Her 20 düşmandan sonra zamanlayıcıyı hızlandır
+           if enemyCount % 20 == 0 {
+               timerInterval = max(0.1, timerInterval - 0.1)  // En düşük aralığı 0.1 saniye ile sınırlayın
+               startGameTimer()  // Yeni zamanlayıcıyı başlat
+           }
     }
     
     
@@ -121,7 +139,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             gameOver.zPosition = 1
             gameOver.name = "game"
             addChild(gameOver)
+            stopGameTimer()
             
         }
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+    }
+    
 }
